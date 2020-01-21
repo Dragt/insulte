@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Proposition insulte</title>
+  <script src="js/vue.js"></script>
+  <script type='text/javascript' src="js/vue-data.js"></script>
+  <style>
+	div {
+	  margin : 10px; 
+	}
+  </style>
+</head>
+<body>
+<div>
+
+  <main>
+  <div>
+  <h1>Idée de formule pour Insulte</h1>
+  
+  <div>Formule de l'énervement ajouté au compteur d'énervement d'un monstre lors d'une insulte full :</div>
+  <div> <strong>[ ( arrondiInferieur( [2 exposant niveauInsulte] / nombreCibles ) - distanceCible ) + niveauInsulte ] </strong></div>
+  
+  <br>
+  <div><em>Simulation : </em></div>
+  <br>
+  
+  </div>
+  
+  
+  
+  <div id="exemple1">
+	<div>
+	  <span>
+	    <label for="niveauInsulte">Insulte niveau :</label> 
+	    <input id="niveauInsulte" v-model="niveauInsulte"
+		       type="number" :min="MIN_NIV_INSULTE" :max="MAX_NIV_INSULTE" 
+			   v-on:change="changerNiveau" > ,</span> 
+	  <span>
+	    Points d'Enervements (PE) de base : {{ pointsEnervementsBase }} + {{ niveauInsulte }}
+	  </span>
+	</div>
+	<div>
+	  <span>
+	    <label for="nombreCibles">Nombre de cibles :</label> 
+	    <input id="nombreCibles" v-model="nombreMonstres" type="number" :min="MIN_NB_MONSTRES" 
+		  :max="MAX_NIV_INSULTE"  v-on:change="changerNombreCibles"> , 
+	  </span> <!-- niveauInsulte -->
+	  <span>
+		  avec 
+		  <input :id="nombreInsultes" v-model="nombreInsultes" type="number" min="0" max="99" >
+		  <label :for="nombreInsultes">insulte(s)</label> : 
+	  </span> 
+	  
+	
+	<div>
+	  <ol>
+	  <li v-for="(monstre, indice) in monstres" v-if="indice < nombreMonstres">
+	  <div class="inlineblock">
+	
+        <!-- <span>Monstre {{ indice + 1 }},</span> )) --> 
+		<span>
+		   <label :for="'sangfroid' + indice">Sang-Froid</label> 
+		   <select :id="'sangfroid' + indice" v-model="monstre.seuil">
+		    <option value="0">Inexistant (seuil 0)</option>
+		    <option value="2">Faible (seuil 2)</option>
+			<option value="4">Moyen (seuil 4)</option>
+			<option value="8">Elevé (seuil 8)</option>
+			<option value="16">Imperturbable (seuil 16)</option>
+			<option value="32">Maitre Zen (seuil 32)</option>
+			<option value="64">Développeur (seuil 64)</option>
+			<option value="128">Divin (seuil 128)</option>		  
+		  </select>
+		  <!-- Seuil : <strong> {{ monstre.seuil }} </strong>  -->
+		  , </span>
+		<span>
+		  <label :for="'distance' + indice">distance</label>
+		  <input :id="'distance' + indice" v-model="monstre.distance" type="number" :min="MIN_DISTANCE" 
+		  :max="MAX_NIV_INSULTE"  v-on:change="changerDistance"> , 
+		</span> <!-- niveauInsulte -->
+		
+		
+		<span> ==> </span>
+		
+        <span>{{ nombreInsultes }} * [ ( ( {{ pointsEnervementsBase }} / {{ nombreMonstres }} ) - {{ monstre.distance }} ) + {{ niveauInsulte }} ] =</span>
+        <span><strong>+ {{ pointsEnervementsMonstres[indice] }} PE</strong> ,</span>
+		
+		<span>insulté pour {{ dureesInsultes[indice] }} Tour(s)</span>
+        <span><em>( {{ evolutionEnervements[indice].join(' -> ') }} )</em></span>
+		
+		</div>
+      </li>
+	  </ol>
+	  
+	</div>
+  <div>
+
+</body>
+</html>
